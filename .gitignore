@@ -12,3 +12,4 @@ project.vim
 .project
 *.sc
 .worksheet
+.idea
