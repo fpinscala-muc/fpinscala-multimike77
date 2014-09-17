@@ -1,6 +1,9 @@
 package fpinscala.laziness
 
 import Stream._
+
+import scala.annotation.tailrec
+
 trait Stream[+A] {
 
   def foldRight[B](z: => B)(f: (A, => B) => B): B = // The arrow `=>` in front of the argument type `B` means that the function `f` takes its second argument by name and may choose not to evaluate it.
@@ -18,9 +21,27 @@ trait Stream[+A] {
     case Cons(h, t) => if (f(h())) Some(h()) else t().find(f)
   }
 
-  def toList: List[A] = sys.error("todo")
+  def toList: List[A] = {
+    @tailrec
+    def go(s: Stream[A], acc: List[A]): List[A] = s match {
+      case Cons(h, t) => go(t(), h() :: acc)
+      case _ => acc
+    }
 
-  def take(n: Int): Stream[A] = sys.error("todo")
+    go(this, Nil).reverse
+  }
+
+  def take(n: Int): Stream[A] =  {
+    if (n > 0) {
+      this match {
+        case Cons(h, t) if n == 1 => cons(h(), Empty)
+        case Cons(h, t) => cons(h(), t().take(n-1))
+        case _ => Empty
+      }
+    } else {
+      Empty
+    }
+  }
 
   def takeViaUnfold(n: Int): Stream[A] = sys.error("todo")
 
@@ -67,6 +88,7 @@ object Stream {
 
   val ones: Stream[Int] = Stream.cons(1, ones)
 
+/*
   def constant[A](a: A): Stream[A] = sys.error("todo")
 
   def from(n: Int): Stream[Int] = sys.error("todo")
@@ -82,4 +104,5 @@ object Stream {
   def constantViaUnfold[A](a: A): Stream[A] = sys.error("todo")
 
   val onesViaUnfold: Stream[Int] = sys.error("todo")
+*/
 }

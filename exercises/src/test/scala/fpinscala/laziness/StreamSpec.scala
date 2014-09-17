@@ -81,6 +81,7 @@ class StreamSpec extends FlatSpec with PropertyChecks {
     }
   }
 
+/*
   behavior of "5.3 takeWhile"
 
   def even(n: Int) = n % 2 == 0
@@ -497,5 +498,5 @@ class StreamSpec extends FlatSpec with PropertyChecks {
       assertResult(l1.zip(l2).map(plus.tupled))(Stream(l1: _*).zipWith(Stream(l2: _*))(plus).toList)
     }
   }
-
+*/
 }
