@@ -21,6 +21,7 @@ trait Stream[+A] {
     case Cons(h, t) => if (f(h())) Some(h()) else t().find(f)
   }
 
+  // 5.1
   def toList: List[A] = {
     @tailrec
     def go(s: Stream[A], acc: List[A]): List[A] = s match {
@@ -31,6 +32,7 @@ trait Stream[+A] {
     go(this, Nil).reverse
   }
 
+  // 5.2
   def take(n: Int): Stream[A] =  {
     if (n > 0) {
       this match {
@@ -47,13 +49,26 @@ trait Stream[+A] {
 
   def drop(n: Int): Stream[A] = sys.error("todo")
 
-  def takeWhile(p: A => Boolean): Stream[A] = sys.error("todo")
+  // 5.3
+  def takeWhile(p: A => Boolean): Stream[A] = this match {
+    case Cons(h, t) if p(h()) => cons(h(), t().takeWhile(p))
+    case _ => Empty
+  }
 
   def takeWhileViaUnfold(p: A => Boolean): Stream[A] = sys.error("todo")
 
-  def forAll(p: A => Boolean): Boolean = sys.error("todo")
+  // 5.4
+  def forAll(p: A => Boolean): Boolean = {
+    foldRight(true)((a, b) => p(a) && b)
+  }
 
-  def takeWhileViaFoldRight(p: A => Boolean): Stream[A] = sys.error("todo")
+  // 5.5
+  def takeWhileViaFoldRight(p: A => Boolean): Stream[A] = {
+    foldRight(empty[A])((a, b) =>
+      if (p(a)) cons(a,b)
+      else empty
+    )
+  }
 
   def headOption: Option[A] = sys.error("todo")
 
@@ -70,6 +85,8 @@ trait Stream[+A] {
   def zipWith[B,C](s2: Stream[B])(f: (A,B) => C): Stream[C] = sys.error("todo")
   def startsWith[B](s: Stream[B]): Boolean = sys.error("todo")
 }
+
+
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
 
