@@ -88,21 +88,21 @@ object Stream {
 
   val ones: Stream[Int] = Stream.cons(1, ones)
 
-/*
+
   def constant[A](a: A): Stream[A] = sys.error("todo")
 
   def from(n: Int): Stream[Int] = sys.error("todo")
 
-  val fibs: Stream[Int] = sys.error("todo")
+  lazy val fibs: Stream[Int] = sys.error("todo")
 
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = sys.error("todo")
 
-  val fibsViaUnfold: Stream[Int] = sys.error("todo")
+  lazy val fibsViaUnfold: Stream[Int] = sys.error("todo")
 
   def fromViaUnfold(n: Int): Stream[Int] = sys.error("todo")
 
   def constantViaUnfold[A](a: A): Stream[A] = sys.error("todo")
 
-  val onesViaUnfold: Stream[Int] = sys.error("todo")
-*/
+  lazy val onesViaUnfold: Stream[Int] = sys.error("todo")
+
 }
