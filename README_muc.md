@@ -39,6 +39,21 @@ If not done yet the sbteclipse plugin has to be configured, add the following to
 
 See also https://github.com/typesafehub/sbteclipse/
 
+### Import projects into IntelliJ IDEA
+
+To import the project into IntelliJ IDEA the project files have to be generated first.
+
+    $ sbt gen-idea
+
+If not done yet the IntelliJ plugin has to be configured, add the following to `~/.sbt/0.13/plugins/plugins.sbt`:
+
+    addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.6.0")
+
+See also https://github.com/mpeltonen/sbt-idea/
+
+## In the Beginning - Scala
+* Scala Coding guidelines: http://twitter.github.io/effectivescala/ (see also the Learning Scala links in the Intro section there)
+
 ## Chapter 1: What is functional programming?
 ### Additional links
 * http://www.youtube.com/watch?v=1gZAqJA2pEk This video by Paul Chiusano is about an earlier version (with a different example) of the first chapter. It gives a nice intro & summary what the book is up to.
@@ -53,7 +68,7 @@ See also https://github.com/typesafehub/sbteclipse/
 Actually, I have never ever used it, so I had to look up the exact meaning.
 Seems to be similar to Java, but try to avoid it. Really! There might be only a few useful cases:
 http://stackoverflow.com/questions/3770989/purpose-of-return-statement-in-scala
- 
+
 #### Is the book’s partial1 function really a case of a closure?
 According to Wikipedia it is: http://en.wikipedia.org/wiki/Closure_%28computer_science%29
 The function incrementBy in the first example is a closure b/c of variable x, defined outside its body/lexical scope.
@@ -118,7 +133,7 @@ so why bother too much about internals?
 #### Some more examples for Option and Either
 These are the additional examples from the session: https://github.com/fpinscala-muc/fpinscala-abo64/blob/master/exercises/src/main/scala/fpinscala/errorhandling/Worksheet.sc
 
-### Additional links
+#### Additional links
 * http://danielwestheide.com/blog/2012/12/19/the-neophytes-guide-to-scala-part-5-the-option-type.html
 * http://danielwestheide.com/blog/2012/12/26/the-neophytes-guide-to-scala-part-6-error-handling-with-try.html Try has its theoretical flaws, but in practice ...
 * http://danielwestheide.com/blog/2013/01/02/the-neophytes-guide-to-scala-part-7-the-either-type.html
@@ -131,14 +146,33 @@ These are the additional examples from the session: https://github.com/fpinscala
 
 ### Chapter 5: Strictness and laziness
 
-### Additional links
+#### Additional links
 * http://www.nurkiewicz.com/2013/05/lazy-sequences-in-scala-and-clojure.html
 * https://github.com/ardlema/scala-lazy-evaluation (exercise from Coursera "Principles of Reactive Programming" course https://www.coursera.org/course/reactive)
 
-### Google Billboard Puzzle
+#### Google Billboard Puzzle
 Here is the problem http://mathworld.wolfram.com/news/2004-10-13/google/ with the Mathematica solution  
 Select[FromDigits/@Partition[First[RealDigits[E,10,1000]],10,1],PrimeQ,1]  
 Here is a Java solution: http://google-tale.blogspot.de/2008/07/google-billboard-puzzle.html  
 Can we come up with an elegant (Stream?!) solution in Scala that is somewhere in between Mathematica and Java?
 
+### Misc
+* Interesting talk about types and type inference: https://www.youtube.com/watch?v=fDTt_uo0F-g
+* [Property-based testing with ScalaCheck](http://www.nurkiewicz.com/2014/09/property-based-testing-with-scalacheck.html)
+(although [ScalaTests's docu](http://scalatest.org/user_guide/generator_driven_property_checks) is also quite ok).
+* [Object-Functional Programming – A Beautiful Unification or a Kitchen Sink?](https://speakerdeck.com/missingfaktor/object-functional-programming-a-beautiful-unification-or-a-kitchen-sink)
 
+#### Is Scala too complex?
+* http://lampwww.epfl.ch/~odersky/blogs/isscalacomplex.html
+* http://warpedjavaguy.wordpress.com/2010/08/02/the-scala-is-too-complex-conspiracy-1/
+* http://blog.ericdaugherty.com/2010/07/is-scala-too-complex.html
+* https://news.ycombinator.com/item?id=830326
+* http://stackoverflow.com/questions/2573899/why-is-scala-very-complex
+* http://www.artima.com/weblogs/viewpost.jsp?thread=268561
+* http://www.scala-lang.org/old/node/7431
+* http://michid.wordpress.com/2010/08/24/so-scala-is-too-complex/
+* http://cemerick.com/2011/07/14/scala-isnt-complicated-its-clever/
+* http://www.scala-lang.org/old/node/8610
+* http://blog.schauderhaft.de/2010/12/05/is-it-bad-to-use-scala-as-java-with-a-more-concise-syntax/
+* http://speaking-my-language.blogspot.de/2009/11/is-scala-more-complicated-than-java.html
+* http://scala-programming-language.1934581.n4.nabble.com/More-unicode-alternatives-for-ASCII-operators-td2008146.html
