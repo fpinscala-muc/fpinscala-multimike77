@@ -30,9 +30,17 @@ object RNG {
       (f(a), rng2)
     }
 
-  def nonNegativeInt(rng: RNG): (Int, RNG) = ???
+  def nonNegativeInt(rng: RNG): (Int, RNG) = {
+    val (int1, rng2) = rng.nextInt
+    if (int1 == Int.MinValue) (0, rng2)
+    else (math.abs(int1), rng2)
+  }
 
-  def double(rng: RNG): (Double, RNG) = ???
+  def double(rng: RNG): (Double, RNG) = {
+    val (i, rng2) = nonNegativeInt(rng)
+    val i1 = (i.toDouble / Int.MinValue) * -1
+    (i1, rng2)
+  }
 
   def intDouble(rng: RNG): ((Int,Double), RNG) = ???
 
