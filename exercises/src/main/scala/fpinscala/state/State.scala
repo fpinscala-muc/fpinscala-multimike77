@@ -38,12 +38,14 @@ object RNG {
     else (math.abs(int1), rng2)
   }
 
+  // 6.2
   def double(rng: RNG): (Double, RNG) = {
     val (i, rng2) = nonNegativeInt(rng)
     val i1 = (i.toDouble / Int.MinValue) * -1
     (i1, rng2)
   }
 
+  // 6.3
   def intDouble(rng: RNG): ((Int,Double), RNG) = {
     val (i, rng1) = rng.nextInt
     val (d, rng2) = double(rng1)
@@ -62,6 +64,7 @@ object RNG {
     ((d1, d2, d3), rng3)
   }
 
+  // 6.4
   def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
 
     @tailrec
@@ -76,16 +79,38 @@ object RNG {
     doIt(count, Nil, rng)
   }
 
-  def doubleViaMap: Rand[Double] = ???
+  // 6.5
+  def doubleViaMap: Rand[Double] = {
+    map(nonNegativeInt)(
+      i => {
+        (i.toDouble / Int.MinValue) * -1
+      }
+    )
+  }
 
-  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = ???
+  // 6.6
+  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = {
+    rng => {
+      val (a, rng1) = ra(rng)
+      val (b, rng2) = rb(rng1)
+      (f(a, b), rng2)
+    }
+  }
 
+  // 6.7
   def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = ???
 
-  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = ???
+  // 6.8
+  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = {
+    rng => {
+      val (a, rng1) = f(rng)
+      g(a)(rng1)
+    }
+  }
 
   def nonNegativeLessThan(n: Int): Rand[Int] = ???
 
+  // 6.9
   def mapViaFlatMap[A,B](s: Rand[A])(f: A => B): Rand[B] = ???
 
   def map2ViaFlatMap[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = ???
